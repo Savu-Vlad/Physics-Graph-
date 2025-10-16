@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.pkl
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Matplotlib / cache files
+.matplotlib/
+
+# Backup files
+*~
