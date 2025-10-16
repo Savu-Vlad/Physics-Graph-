@@ -11,6 +11,9 @@ dist/
 build/
 *.log
 
+# Data files
+*.csv
+
 # Virtual environment
 .venv/
 env/
@@ -19,7 +22,6 @@ venv/
 # IDEs / Editors
 .vscode/
 .idea/
-*.swp
 
 # OS
 .DS_Store
