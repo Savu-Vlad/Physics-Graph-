@@ -60,7 +60,8 @@ Once it’s ready, launch the app:
 1. **Start the app** with `./run.sh`  
 2. **Load your data**  
    - Click **Browse CSV → Load**, or  
-   - Paste your own values into the box (CSV-style or space-separated)  
+   - Paste your own values into the box (CSV-style or space-separated)
+   - First line is for axis names!!  
 3. **Choose polynomial order**  
    - Default = 1 (linear)  
    - Try 2 or 3 for curved fits  
