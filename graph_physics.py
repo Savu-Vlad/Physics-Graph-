@@ -88,7 +88,7 @@ def save_csv_dialog(x, y):
         return
     
     pd.DataFrame({"x": x, "y": y}).to_csv(path, index=False)
-    messagebox.showinfo("GraphPhysics", f"✅ Saved → {Path(path).name}")
+    messagebox.showinfo("GraphPhysics", f" Saved → {Path(path).name}")
 
 
 # ============================================================================
@@ -130,12 +130,12 @@ def fit_and_plot(x, y, order, xlabel, ylabel):
 
     eq = str(np.poly1d(coeffs))
     print("\n" + "="*60)
-    print("📊 REGRESSION RESULTS")
+    print(" REGRESSION RESULTS")
     print("="*60)
-    print(f"\n📈 Equation of best fit:\n{eq}")
-    print(f"\n📐 Slope (m): {slope:.8f}")
-    print(f"📍 Intercept (b): {intercept:.8f}")
-    print(f"\n📊 R² (Goodness of fit): {r2:.8f}")
+    print(f"\n Equation of best fit:\n{eq}")
+    print(f"\n Slope (m): {slope:.8f}")
+    print(f" Intercept (b): {intercept:.8f}")
+    print(f"\n R² (Goodness of fit): {r2:.8f}")
     print(f"✓ Data points fitted: {len(x)}")
     print("="*60 + "\n")
     
@@ -152,29 +152,29 @@ x_label = y_label = None
 def browse_csv():
     """Open file browser to select CSV file."""
     path = filedialog.askopenfilename(
-        title="📁 Select CSV File",
+        title=" Select CSV File",
         filetypes=[("CSV files", "*.csv"), ("All files", "*.*")]
     )
     if path:
         csv_path.set(path)
-        status.set(f"📂 Selected: {Path(path).name}")
+        status.set(f" Selected: {Path(path).name}")
 
 
 def load_clicked():
     """Load CSV file and update data."""
     global x_data, y_data, x_label, y_label
     if not csv_path.get():
-        messagebox.showwarning("GraphPhysics", "⚠️  Please select a CSV file first.")
+        messagebox.showwarning("GraphPhysics", "  Please select a CSV file first.")
         return
     try:
         x_data, y_data, x_label, y_label = load_csv(csv_path.get())
-        status.set(f"✅ Loaded {len(x_data)} rows | {x_label} vs {y_label}")
+        status.set(f" Loaded {len(x_data)} rows | {x_label} vs {y_label}")
         data_info_label.config(
-            text=f"📊 Data: {len(x_data)} points | Range X: [{x_data.min():.2f}, {x_data.max():.2f}]"
+            text=f" Data: {len(x_data)} points | Range X: [{x_data.min():.2f}, {x_data.max():.2f}]"
         )
     except Exception as e:
         messagebox.showerror("GraphPhysics Error", str(e))
-        status.set("❌ Failed to load CSV")
+        status.set(" Failed to load CSV")
 
 
 def use_paste_clicked():
@@ -182,42 +182,42 @@ def use_paste_clicked():
     global x_data, y_data, x_label, y_label
     try:
         x_data, y_data, x_label, y_label = parse_pasted(text_box.get("1.0", "end"))
-        status.set(f"✅ Using pasted data ({len(x_data)} rows, {x_label} vs {y_label})")
+        status.set(f" Using pasted data ({len(x_data)} rows, {x_label} vs {y_label})")
         data_info_label.config(
-            text=f"📊 Data: {len(x_data)} points | Range X: [{x_data.min():.2f}, {x_data.max():.2f}]"
+            text=f" Data: {len(x_data)} points | Range X: [{x_data.min():.2f}, {x_data.max():.2f}]"
         )
     except Exception as e:
         messagebox.showerror("GraphPhysics Error", str(e))
-        status.set("❌ Failed to parse pasted data")
+        status.set(" Failed to parse pasted data")
 
 
 def run_fit():
     """Execute polynomial fitting and visualization."""
     if x_data is None or y_data is None:
-        messagebox.showwarning("GraphPhysics", "⚠️  Load a CSV or paste data first.")
+        messagebox.showwarning("GraphPhysics", "  Load a CSV or paste data first.")
         return
     try:
         order = int(order_entry.get())
         if order < 1 or order > 10:
             raise ValueError("Polynomial order must be between 1 and 10.")
         r2, eq, slope, intercept = fit_and_plot(x_data, y_data, order, x_label, y_label)
-        status.set(f"✨ Fit completed! R² = {r2:.8f}")
+        status.set(f" Fit completed! R² = {r2:.8f}")
         # Update results panel
         results_text.config(state=tk.NORMAL)
         results_text.delete(1.0, tk.END)
-        results_text.insert(tk.END, f"📊 RESULTS\n")
+        results_text.insert(tk.END, f" RESULTS\n")
         results_text.insert(tk.END, f"{'='*33}\n\n")
-        results_text.insert(tk.END, f"📈 Slope (m):\n{slope:.8f}\n\n")
-        results_text.insert(tk.END, f"📍 Intercept (b):\n{intercept:.8f}\n\n")
-        results_text.insert(tk.END, f"📐 R² Value:\n{r2:.8f}\n\n")
+        results_text.insert(tk.END, f" Slope (m):\n{slope:.8f}\n\n")
+        results_text.insert(tk.END, f" Intercept (b):\n{intercept:.8f}\n\n")
+        results_text.insert(tk.END, f" R² Value:\n{r2:.8f}\n\n")
         results_text.insert(tk.END, f"✓ Points: {len(x_data)}\n")
         results_text.config(state=tk.DISABLED)
     except ValueError as e:
         messagebox.showerror("GraphPhysics Error", str(e))
-        status.set("❌ Invalid order value")
+        status.set(" Invalid order value")
     except Exception as e:
         messagebox.showerror("GraphPhysics Error", str(e))
-        status.set("❌ Fitting failed")
+        status.set(" Fitting failed")
 
 
 # ============================================================================
@@ -225,7 +225,7 @@ def run_fit():
 # ============================================================================
 
 root = tb.Window(themename="darkly")
-root.title("📊 GraphPhysics - Polynomial Regression")
+root.title(" GraphPhysics - Polynomial Regression")
 root.geometry("800x550")
 
 # Configure dark theme colors
@@ -245,11 +245,11 @@ main.rowconfigure(3, weight=1)
 # --- TITLE ---
 title_frame = tb.Frame(main)
 title_frame.grid(row=0, column=0, columnspan=3, sticky="ew", pady=(0, 15))
-tb.Label(title_frame, text="📊 GraphPhysics", style="Title.TLabel").pack(side="left")
+tb.Label(title_frame, text=" GraphPhysics", style="Title.TLabel").pack(side="left")
 tb.Label(title_frame, text="Polynomial Regression Analysis", style="Info.TLabel").pack(side="left", padx=(15, 0))
 
 # --- SECTION 1: CSV INPUT ---
-csv_section = tb.LabelFrame(main, text="📂 Load From CSV File", padding=10)
+csv_section = tb.LabelFrame(main, text=" Load From CSV File", padding=10)
 csv_section.grid(row=1, column=0, columnspan=3, sticky="ew", pady=(0, 12))
 csv_section.columnconfigure(0, weight=1)
 
@@ -257,7 +257,7 @@ csv_path = tk.StringVar()
 csv_input = tb.Entry(csv_section, textvariable=csv_path, width=60)
 csv_input.grid(row=0, column=0, padx=(0, 10), pady=5, sticky="ew")
 
-tb.Button(csv_section, text="📁 Browse", bootstyle="info", command=browse_csv).grid(row=0, column=1, padx=5)
+tb.Button(csv_section, text=" Browse", bootstyle="info", command=browse_csv).grid(row=0, column=1, padx=5)
 tb.Button(csv_section, text="✓ Load CSV", bootstyle="success", command=load_clicked).grid(row=0, column=2, padx=5)
 
 # --- SECTION 2: POLYNOMIAL ORDER ---
@@ -269,9 +269,9 @@ order_entry = tb.Entry(config_section, width=4, bootstyle="info")
 order_entry.insert(0, "1")
 order_entry.pack(side="left", padx=(0, 20))
 
-tb.Label(config_section, text="🎯 Run Analysis:", style="Header.TLabel").pack(side="left", padx=(0, 10))
-tb.Button(config_section, text="🚀 Fit & Plot", bootstyle="danger", command=run_fit, width=15).pack(side="left")
-tb.Button(config_section, text="💾 Save Data", bootstyle="warning", command=lambda: save_csv_dialog(x_data, y_data), width=15).pack(side="left", padx=(10, 0))
+tb.Label(config_section, text=" Run Analysis:", style="Header.TLabel").pack(side="left", padx=(0, 10))
+tb.Button(config_section, text=" Fit & Plot", bootstyle="danger", command=run_fit, width=15).pack(side="left")
+tb.Button(config_section, text=" Save Data", bootstyle="warning", command=lambda: save_csv_dialog(x_data, y_data), width=15).pack(side="left", padx=(10, 0))
 
 # --- SECTION 3: PASTE DATA ---
 paste_label = tb.Label(main, text="📋 Or Paste Data (space/comma separated, optional header):", style="Header.TLabel")
@@ -291,7 +291,7 @@ text_box.config(yscrollcommand=scrollbar.set)
 scrollbar.pack(side="right", fill="y")
 
 # --- SECTION 3B: RESULTS PANEL ---
-results_label = tb.Label(main, text="📊 Analysis Results:", style="Header.TLabel")
+results_label = tb.Label(main, text=" Analysis Results:", style="Header.TLabel")
 results_label.grid(row=3, column=2, sticky="w", pady=(10, 5), padx=(10, 0))
 
 results_frame = tb.Frame(main)
@@ -308,14 +308,14 @@ results_text.config(state=tk.DISABLED)
 action_frame = tb.Frame(main)
 action_frame.grid(row=5, column=0, columnspan=3, sticky="ew", pady=(0, 12))
 
-tb.Button(action_frame, text="📥 Use Pasted Data", bootstyle="info", command=use_paste_clicked).pack(side="left", padx=5)
+tb.Button(action_frame, text=" Use Pasted Data", bootstyle="info", command=use_paste_clicked).pack(side="left", padx=5)
 
 # --- STATUS & INFO ---
-status = tk.StringVar(value="🟢 Ready")
+status = tk.StringVar(value=" Ready")
 status_label = tb.Label(main, textvariable=status, style="Info.TLabel", anchor="w")
 status_label.grid(row=6, column=0, columnspan=3, sticky="ew", pady=(5, 0))
 
-data_info_label = tb.Label(main, text="⏳ Awaiting data...", style="Info.TLabel", anchor="w")
+data_info_label = tb.Label(main, text=" Awaiting data...", style="Info.TLabel", anchor="w")
 data_info_label.grid(row=7, column=0, columnspan=3, sticky="ew", pady=(2, 0))
 
 # ============================================================================
