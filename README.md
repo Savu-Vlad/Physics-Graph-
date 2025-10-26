@@ -199,5 +199,3 @@ chmod +x install.sh run.sh
 # Run the application
 ./run.sh
 \`\`\`
-
-**Enjoy analyzing your data/home/savu-vlad/Downloads/Personal_Projects/CurveLab && mv curvelab.py graph_physics.py && echo "✅ File renamed: curvelab.py → graph_physics.py"* 📈✨
