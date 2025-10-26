@@ -1,37 +1,47 @@
-# 🧮 CurveLab
+<-ll filepath: GraphPhysics README -->
+# 📊 GraphPhysics
 
-CurveLab is a small Python app for quickly fitting **linear** and **polynomial** regressions to your data.  
-It gives you a clean, simple interface to load or paste data, choose the curve order, and instantly see the result.
+GraphPhysics is a modern Python application for fitting **linear** and **polynomial** regressions to experimental data.  
+It provides a sleek, professional interface to load or paste data, select the polynomial order, and instantly visualize the results with beautiful plots.
 
 ---
 
 ## 💡 What it does
 
-- ✨ Modern, lightweight GUI (thanks to [ttkbootstrap](https://github.com/israel-dryer/ttkbootstrap))
-- 📊 Fits curves of any order — from a straight line to high-order polynomials
-- 📁 Load data from CSV or paste it right in
-- 📈 See scatter + best-fit curve in one click
-- 💾 Save your data back to CSV
-- 🧠 Shows the equation and R² value right in the console
+- ✨ Modern dark theme GUI with intuitive controls (powered by [ttkbootstrap](https://github.com/israel-dryer/ttkbootstrap))
+- 📊 Fits polynomial curves of any order — from linear (order 1) to high-degree polynomials
+- 📁 Load data from CSV files or paste it directly
+- 📈 Beautiful scatter plots with best-fit curves and color-coded visualization
+- 💾 Save your analyzed datasets back to CSV
+- 🧮 Displays regression equations, R² statistics, and detailed analysis in terminal
+- 🎨 Professional-grade plots with customizable styling
 
 ---
 
-## 🧰 What you need first
+## 🧰 Requirements
 
-You’ll need **Python 3.9+** with the `venv` module and `tkinter` for the GUI.
+You'll need **Python 3.9+** with the `venv` module and `tkinter` for the GUI.
 
 ### On Arch Linux
-    sudo pacman -S python tk
+\`\`\`bash
+sudo pacman -S python tk
+\`\`\`
 
 ### On Ubuntu / Debian
-    sudo apt install python3 python3-venv python3-tk
+\`\`\`bash
+sudo apt install python3 python3-venv python3-tk
+\`\`\`
 
 ### On Fedora
-    sudo dnf install python3 python3-tkinter
+\`\`\`bash
+sudo dnf install python3 python3-tkinter
+\`\`\`
 
 You can test if Tkinter works:
-    python3 -m tkinter
-If a tiny window called **“Tk”** pops up — you’re good.
+\`\`\`bash
+python3 -m tkinter
+\`\`\`
+If a tiny window called **"Tk"** pops up — you're good to go!
 
 ---
 
@@ -39,88 +49,155 @@ If a tiny window called **“Tk”** pops up — you’re good.
 
 Clone and install:
 
-```bash
-git clone https://github.com/yourusername/CurveLab.git
-cd CurveLab
+\`\`\`bash
+git clone https://github.com/yourusername/GraphPhysics.git
+cd GraphPhysics
 chmod +x install.sh run.sh
 ./install.sh
-```
+\`\`\`
 
-That creates a `.venv` and installs everything from `requirements.txt`.  
-Once it’s ready, launch the app:
+That creates a \`venv\` directory and installs everything from \`requirements.txt\`.  
+Once it's ready, launch the app:
 
-```bash
+\`\`\`bash
 ./run.sh
-```
+\`\`\`
 
 ---
 
-## 🖱️ Using CurveLab
+## 🖱️ How to use GraphPhysics
 
-1. **Start the app** with `./run.sh`  
+1. **Start the application** with \`./run.sh\`  
+
 2. **Load your data**  
-   - Click **Browse CSV → Load**, or  
-   - Paste your own values into the box (CSV-style or space-separated)
-   - First line is for axis names!!  
-3. **Choose polynomial order**  
-   - Default = 1 (linear)  
-   - Try 2 or 3 for curved fits  
-4. **Hit “Run Fit”**  
-   - See your scatter plot and best-fit curve  
-   - The equation and R² show up in the terminal  
-5. **Optional:** Save your dataset with **Save CSV**
+   - Click **📁 Browse** to select a CSV file, then click **✓ Load CSV**, or  
+   - Paste your data directly into the text area (comma or space-separated)
+   - The first line can be axis labels (e.g., "voltage intensity" or "distance light_intensity")
+
+3. **Configure polynomial order**  
+   - Enter the desired polynomial order (default = 1 for linear)
+   - Try 2-3 for curved data, higher values for complex relationships
+
+4. **Run the analysis**  
+   - Click **🚀 Fit & Plot**
+   - A window opens with your scatter plot and best-fit curve
+   - The console displays the equation and R² value
+
+5. **Save results** (optional)  
+   - Click **💾 Save Data** to export your dataset
+
+---
+
+## 📊 Example Data Format
+
+**CSV File or Pasted Data:**
+\`\`\`
+voltage,intensity
+0.5,0.1
+1.0,0.2
+1.5,0.3
+2.0,0.4
+\`\`\`
+
+Or space-separated:
+\`\`\`
+voltage intensity
+0.5 0.1
+1.0 0.2
+1.5 0.3
+2.0 0.4
+\`\`\`
 
 ---
 
 ## 🧾 Files in this repo
 
-| File | What it does |
-|------|---------------|
-| `curvelab.py` | Main app |
-| `install.sh` | Creates `.venv` and installs dependencies |
-| `run.sh` | Runs the app inside the virtual environment |
-| `requirements.txt` | Lists Python dependencies |
-| `.gitignore` | Keeps `.venv` and temp files out of git |
-| `README.md` | This file |
+| File | Purpose |
+|------|---------|
+| \`graph_physics.py\` | Main application |
+| \`install.sh\` | Creates \`venv\` and installs dependencies |
+| \`run.sh\` | Launches the app in virtual environment |
+| \`requirements.txt\` | Python package dependencies |
+| \`README.md\` | This documentation |
 
 ---
 
 ## 🧩 Dependencies
 
-Installed automatically:
+Automatically installed via \`requirements.txt\`:
 
-    numpy
-    pandas
-    matplotlib
-    ttkbootstrap
+\`\`\`
+numpy
+pandas
+matplotlib
+ttkbootstrap
+\`\`\`
 
 ---
 
-## 🎨 Extra tips
+## 🎨 Customization
 
-- Switch between **light** and **dark** themes in the code:
-      root = tb.Window(themename="flatly")
-  Try `"darkly"`, `"cyborg"`, or `"superhero"` if you like darker looks.
+### Change the theme
+Edit \`graph_physics.py\` and modify:
+\`\`\`python
+root = tb.Window(themename="darkly")
+\`\`\`
 
-- If Tk is missing on Arch:
-      sudo pacman -S tk
+Available themes: \`"flatly"\`, \`"darkly"\`, \`"cyborg"\`, \`"superhero"\`, \`"solar"\`, etc.
+
+### Adjust plot colors
+In the \`fit_and_plot()\` function:
+\`\`\`python
+ax.scatter(x, y, color="#FF6B6B", ...)  # Data points color
+ax.plot(xx, yy, color="#4ECDC4", ...)   # Fit line color
+\`\`\`
+
+---
+
+## 🔧 Troubleshooting
+
+**ImportError for pandas/numpy:**
+\`\`\`bash
+source venv/bin/activate
+pip install --upgrade pip
+pip install numpy pandas matplotlib ttkbootstrap
+\`\`\`
+
+**Tkinter not found (Arch Linux):**
+\`\`\`bash
+sudo pacman -S tk
+\`\`\`
+
+**Tkinter not found (Ubuntu/Debian):**
+\`\`\`bash
+sudo apt install python3-tk
+\`\`\`
 
 ---
 
 ## 📜 License
 
 MIT License © 2025  
-Free to use, modify, and share for learning and personal projects.
+Free to use, modify, and distribute for educational and personal projects.
 
 ---
 
-### 🚀 Quick start
+## 🚀 Quick Start
 
-    sudo pacman -S python tk
-    git clone https://github.com/yourusername/CurveLab.git
-    cd CurveLab
-    chmod +x install.sh run.sh
-    ./install.sh
-    ./run.sh
+\`\`\`bash
+# Install dependencies
+sudo pacman -S python tk
 
-Happy fitting! 🎉
+# Clone and setup
+git clone https://github.com/yourusername/GraphPhysics.git
+cd GraphPhysics
+chmod +x install.sh run.sh
+
+# Install Python packages
+./install.sh
+
+# Run the application
+./run.sh
+\`\`\`
+
+**Enjoy analyzing your data/home/savu-vlad/Downloads/Personal_Projects/CurveLab && mv curvelab.py graph_physics.py && echo "✅ File renamed: curvelab.py → graph_physics.py"* 📈✨
