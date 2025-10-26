@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Change this if your main file has a different name
-APP_MAIN="curvelab.py"
+APP_MAIN="graph_physics.py"
 
 # 1) Create venv if missing
 if [ ! -d ".venv" ]; then
