@@ -1,24 +1,24 @@
 <-ll filepath: GraphPhysics README -->
-# 📊 GraphPhysics
+# GraphPhysics
 
 GraphPhysics is a modern Python application for fitting **linear** and **polynomial** regressions to experimental data.  
 It provides a sleek, professional interface to load or paste data, select the polynomial order, and instantly visualize the results with beautiful plots.
 
 ---
 
-## 💡 What it does
+## What it does
 
-- ✨ Modern dark theme GUI with intuitive controls (powered by [ttkbootstrap](https://github.com/israel-dryer/ttkbootstrap))
-- 📊 Fits polynomial curves of any order — from linear (order 1) to high-degree polynomials
-- 📁 Load data from CSV files or paste it directly
-- 📈 Beautiful scatter plots with best-fit curves and color-coded visualization
-- 💾 Save your analyzed datasets back to CSV
-- 🧮 Displays regression equations, R² statistics, and detailed analysis in terminal
-- 🎨 Professional-grade plots with customizable styling
+-  Modern dark theme GUI with intuitive controls (powered by [ttkbootstrap](https://github.com/israel-dryer/ttkbootstrap))
+-  Fits polynomial curves of any order — from linear (order 1) to high-degree polynomials
+-  Load data from CSV files or paste it directly
+-  Beautiful scatter plots with best-fit curves and color-coded visualization
+-  Save your analyzed datasets back to CSV
+-  Displays regression equations, R² statistics, and detailed analysis in terminal
+-  Professional-grade plots with customizable styling
 
 ---
 
-## 🧰 Requirements
+##  Requirements
 
 You'll need **Python 3.9+** with the `venv` module and `tkinter` for the GUI.
 
@@ -45,7 +45,7 @@ If a tiny window called **"Tk"** pops up — you're good to go!
 
 ---
 
-## ⚙️ Setup
+##  Setup
 
 Clone and install:
 
@@ -65,12 +65,12 @@ Once it's ready, launch the app:
 
 ---
 
-## 🖱️ How to use GraphPhysics
+##  How to use GraphPhysics
 
 1. **Start the application** with \`./run.sh\`  
 
 2. **Load your data**  
-   - Click **📁 Browse** to select a CSV file, then click **✓ Load CSV**, or  
+   - Click ** Browse** to select a CSV file, then click **✓ Load CSV**, or  
    - Paste your data directly into the text area (comma or space-separated)
    - The first line can be axis labels (e.g., "voltage intensity" or "distance light_intensity")
 
@@ -79,16 +79,16 @@ Once it's ready, launch the app:
    - Try 2-3 for curved data, higher values for complex relationships
 
 4. **Run the analysis**  
-   - Click **🚀 Fit & Plot**
+   - Click ** Fit & Plot**
    - A window opens with your scatter plot and best-fit curve
    - The console displays the equation and R² value
 
 5. **Save results** (optional)  
-   - Click **💾 Save Data** to export your dataset
+   - Click ** Save Data** to export your dataset
 
 ---
 
-## 📊 Example Data Format
+##  Example Data Format
 
 **CSV File or Pasted Data:**
 \`\`\`
@@ -110,7 +110,7 @@ voltage intensity
 
 ---
 
-## 🧾 Files in this repo
+##  Files in this repo
 
 | File | Purpose |
 |------|---------|
@@ -122,7 +122,7 @@ voltage intensity
 
 ---
 
-## 🧩 Dependencies
+##  Dependencies
 
 Automatically installed via \`requirements.txt\`:
 
@@ -135,7 +135,7 @@ ttkbootstrap
 
 ---
 
-## 🎨 Customization
+##  Customization
 
 ### Change the theme
 Edit \`graph_physics.py\` and modify:
@@ -154,7 +154,7 @@ ax.plot(xx, yy, color="#4ECDC4", ...)   # Fit line color
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 **ImportError for pandas/numpy:**
 \`\`\`bash
@@ -175,14 +175,14 @@ sudo apt install python3-tk
 
 ---
 
-## 📜 License
+##  License
 
 MIT License © 2025  
 Free to use, modify, and distribute for educational and personal projects.
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 \`\`\`bash
 # Install dependencies
