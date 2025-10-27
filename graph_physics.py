@@ -139,7 +139,7 @@ def fit_and_plot(x, y, order, xlabel, ylabel):
     print(f"✓ Data points fitted: {len(x)}")
     print("="*60 + "\n")
     
-    return r2, eq, slope, intercept
+    return r2, eq, slope, intercept, p, coeffs
 
 # ============================================================================
 # GUI CALLBACKS
@@ -147,6 +147,7 @@ def fit_and_plot(x, y, order, xlabel, ylabel):
 
 x_data = y_data = None
 x_label = y_label = None
+current_poly = None  # Store the polynomial for evaluation
 
 
 def browse_csv():
@@ -191,8 +192,53 @@ def use_paste_clicked():
         status.set(" Failed to parse pasted data")
 
 
+def evaluate_y():
+    """Calculate Y value given X."""
+    if current_poly is None:
+        messagebox.showwarning("GraphPhysics", "⚠️  Run a fit first!")
+        return
+    try:
+        x_val = float(eval_x_entry.get())
+        y_val = current_poly(x_val)
+        eval_result_label.config(text=f"y({x_val:.4f}) = {y_val:.8f}", foreground="#00FF00")
+        print(f"\n📊 EVALUATION: y({x_val:.8f}) = {y_val:.8f}\n")
+    except ValueError:
+        messagebox.showerror("GraphPhysics Error", "Invalid X value! Enter a number.")
+        eval_result_label.config(text="❌ Invalid input", foreground="#FF6B6B")
+
+
+def evaluate_x():
+    """Calculate X value(s) given Y (solve polynomial equation)."""
+    if current_poly is None:
+        messagebox.showwarning("GraphPhysics", "⚠️  Run a fit first!")
+        return
+    try:
+        y_val = float(eval_y_entry.get())
+        # Create equation: p(x) - y = 0
+        roots = np.roots(current_poly.coefficients - np.append(np.zeros(len(current_poly.coefficients)-1), y_val))
+        # Filter real roots
+        real_roots = [r.real for r in roots if abs(r.imag) < 1e-10]
+        real_roots.sort()
+        
+        if real_roots:
+            result_text = f"y = {y_val:.4f}:\n"
+            for i, root in enumerate(real_roots, 1):
+                result_text += f"x{i} = {root:.8f}\n"
+            eval_result_label.config(text=result_text, foreground="#00FF00")
+            print(f"\n📊 EVALUATION: For y = {y_val:.8f}")
+            for root in real_roots:
+                print(f"   x = {root:.8f}")
+            print()
+        else:
+            eval_result_label.config(text="❌ No real roots found", foreground="#FF6B6B")
+    except ValueError:
+        messagebox.showerror("GraphPhysics Error", "Invalid Y value! Enter a number.")
+        eval_result_label.config(text="❌ Invalid input", foreground="#FF6B6B")
+
+
 def run_fit():
     """Execute polynomial fitting and visualization."""
+    global current_poly
     if x_data is None or y_data is None:
         messagebox.showwarning("GraphPhysics", "  Load a CSV or paste data first.")
         return
@@ -200,7 +246,8 @@ def run_fit():
         order = int(order_entry.get())
         if order < 1 or order > 10:
             raise ValueError("Polynomial order must be between 1 and 10.")
-        r2, eq, slope, intercept = fit_and_plot(x_data, y_data, order, x_label, y_label)
+        r2, eq, slope, intercept, p, coeffs = fit_and_plot(x_data, y_data, order, x_label, y_label)
+        current_poly = p  # Store polynomial for later use
         status.set(f" Fit completed! R² = {r2:.8f}")
         # Update results panel
         results_text.config(state=tk.NORMAL)
@@ -212,6 +259,11 @@ def run_fit():
         results_text.insert(tk.END, f" R² Value:\n{r2:.8f}\n\n")
         results_text.insert(tk.END, f"✓ Points: {len(x_data)}\n")
         results_text.config(state=tk.DISABLED)
+        # Enable evaluation section
+        eval_x_entry.config(state=tk.NORMAL)
+        eval_y_entry.config(state=tk.NORMAL)
+        eval_btn_y.config(state=tk.NORMAL)
+        eval_btn_x.config(state=tk.NORMAL)
     except ValueError as e:
         messagebox.showerror("GraphPhysics Error", str(e))
         status.set(" Invalid order value")
@@ -226,7 +278,7 @@ def run_fit():
 
 root = tb.Window(themename="darkly")
 root.title(" GraphPhysics - Polynomial Regression")
-root.geometry("800x550")
+root.geometry("900x650")
 
 # Configure dark theme colors
 style = tb.Style()
@@ -310,13 +362,38 @@ action_frame.grid(row=5, column=0, columnspan=3, sticky="ew", pady=(0, 12))
 
 tb.Button(action_frame, text=" Use Pasted Data", bootstyle="info", command=use_paste_clicked).pack(side="left", padx=5)
 
+# --- SECTION 5: EVALUATION PANEL ---
+eval_label = tb.Label(main, text="🧮 Calculate Values from Equation:", style="Header.TLabel")
+eval_label.grid(row=6, column=0, columnspan=3, sticky="w", pady=(10, 5))
+
+eval_section = tb.Frame(main)
+eval_section.grid(row=7, column=0, columnspan=3, sticky="ew", pady=(0, 12))
+
+# Calculate Y given X
+tb.Label(eval_section, text="Calculate Y:", style="Header.TLabel").pack(side="left", padx=(0, 10))
+eval_x_entry = tb.Entry(eval_section, width=12, bootstyle="info", state=tk.DISABLED)
+eval_x_entry.pack(side="left", padx=(0, 5))
+eval_btn_y = tb.Button(eval_section, text="🔍 Solve Y", bootstyle="info", command=evaluate_y, state=tk.DISABLED)
+eval_btn_y.pack(side="left", padx=(0, 30))
+
+# Calculate X given Y
+tb.Label(eval_section, text="Calculate X:", style="Header.TLabel").pack(side="left", padx=(0, 10))
+eval_y_entry = tb.Entry(eval_section, width=12, bootstyle="info", state=tk.DISABLED)
+eval_y_entry.pack(side="left", padx=(0, 5))
+eval_btn_x = tb.Button(eval_section, text="🔍 Solve X", bootstyle="info", command=evaluate_x, state=tk.DISABLED)
+eval_btn_x.pack(side="left", padx=(0, 10))
+
+# Results display
+eval_result_label = tb.Label(main, text="⏳ Results will appear here", style="Info.TLabel", anchor="w", foreground="#A0A0A0")
+eval_result_label.grid(row=8, column=0, columnspan=3, sticky="ew", pady=(5, 0))
+
 # --- STATUS & INFO ---
 status = tk.StringVar(value=" Ready")
 status_label = tb.Label(main, textvariable=status, style="Info.TLabel", anchor="w")
-status_label.grid(row=6, column=0, columnspan=3, sticky="ew", pady=(5, 0))
+status_label.grid(row=9, column=0, columnspan=3, sticky="ew", pady=(5, 0))
 
 data_info_label = tb.Label(main, text=" Awaiting data...", style="Info.TLabel", anchor="w")
-data_info_label.grid(row=7, column=0, columnspan=3, sticky="ew", pady=(2, 0))
+data_info_label.grid(row=10, column=0, columnspan=3, sticky="ew", pady=(2, 0))
 
 # ============================================================================
 # RUN APPLICATION
